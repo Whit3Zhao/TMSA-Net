@@ -266,21 +266,25 @@ class TMSANet(nn.Module):
     """
     TMSA-Net: Combines feature extraction, transformer encoders, and classification modules.
     Args:
-        in_planes: Number of input channels (e.g., sensors or features).
-        radix: Factor for increasing input dimensionality.
-        time_points: Number of time points in the input sequence.
-        num_classes: Number of output classes.
-        embed_dim: Dimensionality of embeddings (default: 19).
-        pool_size: Kernel size for temporal pooling.
-        pool_stride: Stride size for temporal pooling.
-        num_heads: Number of attention heads in transformer.
-        fc_ratio: Expansion ratio for feed-forward layers in transformer.
-        depth: Number of transformer encoder layers.
-        attn_drop: Dropout rate for attention mechanism.
-        fc_drop: Dropout rate for feed-forward layers.
+        in_planes (int): Number of input channels (e.g., sensors).
+        radix (int): Radix factor, typically set to 1.
+        time_points (int): Number of time points in the input sequence.
+        num_classes (int): Number of output classes for classification.
+        embed_dim (int): Dimensionality of embeddings.
+            - Use 19 for BCIC-IV-2a.
+            - Use 6 for BCIC-IV-2b.
+            - Use 10 for HGD.
+        pool_size (int): Kernel size for pooling.
+        pool_stride (int): Stride size for pooling.
+        num_heads (int): Number of attention heads in the transformer.
+        fc_ratio (int): Expansion ratio for feed-forward layers.
+        depth (int): Depth of the transformer encoder (number of layers).
+        attn_drop (float): Dropout rate for attention mechanism.
+            - Set to 0.7 for HGD dataset.
+        fc_drop (float): Dropout rate for feed-forward layers.
     """
-    def __init__(self, in_planes, radix, time_points, num_classes, embed_dim=19, pool_size=50,
-                 pool_stride=15, num_heads=4, fc_ratio=2, depth=1, attn_drop=0.5, fc_drop=0.5):
+    def __init__(self, in_planes, radix, time_points, num_classes, embed_dim=19, pool_size=config.pool_size,
+                 pool_stride=config.pool_stride, num_heads=config.num_heads, fc_ratio=config.fc_ratio, depth=config.depth, attn_drop=0.5, fc_drop=0.5):
         super().__init__()
         self.in_planes = in_planes * radix  # Adjust input dimensionality
         self.extract_feature = ExtractFeature(self.in_planes, time_points, embed_dim, pool_size, pool_stride)
