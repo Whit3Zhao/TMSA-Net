@@ -6,7 +6,7 @@ from torch import nn
 from torch.utils.data import DataLoader
 
 import config
-from datasets import seed_torch, load_data, eegDataset
+from eeg_dataset import seed_torch, load_data, eegDataset
 from train import train_evaluation
 
 
