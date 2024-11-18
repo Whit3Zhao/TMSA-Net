@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from einops import rearrange
-
+import config
 # Multi-scale 1D Convolution Module
 class MultiScaleConv1d(nn.Module):
     """
