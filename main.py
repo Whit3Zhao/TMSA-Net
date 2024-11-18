@@ -70,6 +70,22 @@ def main():
 
         # Initialize the model
         from network.TMSANet import TMSANet
+        # ---- Model Initialization Tips ---- #
+        # - Always set `radix = 1`.
+        # - If using the BCIC-IV-2b dataset:
+        #   Initialize the model as: TMSANet(3, 1, 1000, 2)
+        #   where:
+        #     - 3: Number of input channels
+        #     - 1: Radix value
+        #     - 1000: Number of time points
+        #     - 2: Number of classes
+        # - If using the HGD dataset:
+        #   Initialize the model as: TMSANet(44, 1, 1125, 4)
+        #   where:
+        #     - 44: Number of input channels
+        #     - 1: Radix value
+        #     - 1125: Number of time points
+        #     - 4: Number of classes
         model = TMSANet(22, 1, 1000, 4)
         print('\n', model)
 
